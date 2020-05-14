@@ -1,3 +1,5 @@
+/*All rights reserved. lupnis in LAKEXI 2018-2020*/
+/*The code might be somewhat fool, but i'm trying hard to improve myself :) */
 #ifndef _HEADER_ECHOC_
 #define _HEADER_ECHOC_
 
