@@ -1,5 +1,3 @@
-/*All rights reserved. lupnis in LAKEXI 2018-2020*/
-/*The code might be somewhat fool, but i'm trying hard to improve myself :) */
 #include <iostream>
 #include <Windows.h>
 #include <ctime>
