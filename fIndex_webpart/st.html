@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <title>#dirname# - #servername#</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background-color: #555555;
+    }
+
+    div.header-sec {
+      position: fixed;
+      top: 0;
+      display: flex;
+      text-align: center;
+      align-items: center;
+      overflow: hidden;
+      width: 100vw;
+      height: 48px;
+      background-color: #222222;
+      color: #ffffff;
+      box-shadow: 0 0 10px #758149;
+    }
+
+    .header-button {
+      padding-left: 16px;
+      padding-right: 24px;
+      text-decoration: none;
+      display: flex;
+      overflow: hidden;
+      height: 100%;
+      align-self: center;
+      white-space: nowrap;
+      align-items: center;
+      color: #ffffff;
+      user-select: none;
+    }
+
+    .header-button:hover,
+    .header-button:focus {
+      cursor: pointer;
+      animation: ease-in-out .5s ibtnfcd forwards;
+      -webkit-animation: ease-in-out .5s ibtnfcd forwards;
+    }
+
+    .header-text {
+      align-self: center;
+      margin: 0 auto;
+      margin-right: 48px;
+      position: relative;
+    }
+
+    @keyframes ibtnfcd {
+      from {
+        background-color: #222222;
+      }
+
+      to {
+        background-color: #6b6b6b;
+      }
+    }
+
+    @-webkit-keyframes ibtnfcd {
+      from {
+        background-color: #222222;
+      }
+
+      to {
+        background-color: #6b6b6b;
+      }
+    }
+
+
+
+    @media(max-width:410px) {
+      .header-button {
+        animation: ease-in-out .5s ibtnsld forwards;
+        -webkit-animation: ease-in-out .5s ibtnsld forwards;
+      }
+
+      @keyframes ibtnsld {
+        from {
+          width: auto;
+        }
+
+        to {
+          width: 32px;
+          padding: 0;
+        }
+      }
+
+      @-webkit-keyframes ibtnsld {
+        from {
+          width: auto;
+        }
+
+        to {
+          width: 32px;
+          padding: 0;
+        }
+      }
+    }
+
+    .image-container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .image-container .hbutton {
+      font-size: 2vw;
+      padding-left: 2vw;
+      padding-right: 2vw;
+      margin: 0;
+      text-decoration: none;
+      display: flex;
+      overflow: hidden;
+      height: 100%;
+      align-self: center;
+      white-space: nowrap;
+      align-items: center;
+      color: #ffffff;
+      user-select: none;
+    }
+
+    .image-container .hbutton:hover {
+      cursor: pointer;
+      animation: ease-in-out .5s ibtnfcd forwards;
+      -webkit-animation: ease-in-out .5s ibtnfcd forwards;
+    }
+
+    img.central-container {
+      width: 90vw;
+      object-fit: scale-down;
+      height: 80vh;
+      color: #ffffff;
+      text-align: center;
+    }
+
+    .bottom-line {
+      background-color: #222222;
+      position: fixed;
+      bottom: 0;
+      width: 100vw;
+      height: 8px;
+    }
+
+    #progress {
+      height: 100%;
+      background-color: #ffffff;
+      width: var(--progress);
+    }
+
+    #jumptopage {
+      height: 18px;
+      width: 64px;
+      margin-left: 12px;
+      margin-right: 8px;
+      outline: none;
+      border-radius: 4px;
+      border: 1px solid #222222;
+      background-color: #444444;
+    }
+
+    #jumptopage:hover,
+    #jumptopage:focus {
+      border: 1px solid #b5ffb5;
+      background-color: #ffffff;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+  </style>
+  <script>
+    function makelist() {
+      var dd = document.getElementById("filelist").getElementsByTagName("a");
+      if (dd.length == 0) { }
+      else { for (total = 1; total <= dd.length; total++) { plist[total - 1] = dd[total - 1].innerHTML; } total--; }
+      totalpages.innerHTML = "/" + total;
+    };
+    function replaceto(index) {
+      if (total == -1) {
+        document.getElementById("progress").setAttribute("style", "--progress:100%;background-color: #970202");
+        imgcr.setAttribute("alt", "此目录下不存在图片！");
+        downloadthis.setAttribute("style", "display:none");
+      }
+      else if (total == 0) {
+        document.getElementById("progress").setAttribute("style", "--progress:100%");
+        imgcr.setAttribute("src", plist[0]);
+        downloadthis.setAttribute("href", plist[0]);
+        downloadthis.setAttribute("download", plist[0])
+        jumptopage.value = 1;
+      }
+      else {
+        document.getElementById("progress").setAttribute("style", "--progress:" + ((now + 1) / total) * 100 + "%");
+        imgcr.setAttribute("src", plist[index]);
+        downloadthis.setAttribute("href", plist[index]);
+        downloadthis.setAttribute("download", plist[index]);
+        jumptopage.value = index + 1;
+      }
+    };
+    function previ() {
+      if (total != 0 && total != -1) { now = (now - 1 < 0 ? (total - 1) : (now - 1)); }
+      replaceto(now);
+    };
+    function nexti() {
+      if (total != 0 && total != -1) { now = ((now + 1) % total); }
+      replaceto(now);
+    };
+
+    function onLoad() {
+      makelist();
+      replaceto(0);
+      prev.onclick = (e) => previ();
+      prev.onkeydown = (e) => {
+        if (e.key == 'Enter' || e.key == ' ') {
+          previ();
+          e.preventDefault();
+        }
+      };
+      next.onclick = (e) => nexti();
+      next.onkeydown = (e) => {
+        if (e.key == 'Enter' || e.key == ' ') {
+          nexti();
+          e.preventDefault();
+        }
+      };
+      jumptopage.onkeydown = (e) => {
+        if (e.key == 'Enter' || e.key == ' ') {
+          now = ((document.getElementById("jumptopage").value - 1) < 1 ? 0 : ((document.getElementById("jumptopage").value) > total ? (total - 1) : document.getElementById("jumptopage").value - 1));
+          replaceto(now);
+          e.preventDefault();
+        }
+      };
+    }
+    var now = 0;
+    var total = -1;
+    var plist = new Array();
+    window.addEventListener('DOMContentLoaded', onLoad);
+  </script>
+</head>
+
+<body>
+  <div class="header-sec">
+    <a class="header-button" href="../"><img src="parentdir.png">返回上一级</a>
+    <a class="header-button" id="downloadthis" href=""><img src="download.png">下载此图</a>
+    <input type="number" id="jumptopage" value="1"></input><a id="totalpages">/0</a>
+  </div>
+  <div class="image-container">
+    <a id="prev" class="hbutton">&laquo;</a>
+    <img id="imgcr" class="central-container" src="#noimg#" alt="图片打开失败">
+    <a id="next" class="hbutton">&raquo;</a>
+  </div>
+  <div class="bottom-line">
+    <div id="progress" style="--progress:100%;background-color:#970202"></div>
+  </div>
+  <div style="display:none" id="filelist">
+  </div>
+</body>
+
+</html>

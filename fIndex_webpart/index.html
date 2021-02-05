@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+        <title>#dirname# - #servername#</title>
+        <style>
+          body{
+    padding:0;
+    margin:0;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    background-color:#ffffff;
+}
+div.header-sec{
+    position: fixed;
+    top:0;
+    display:flex;
+    text-align: center;
+    overflow: hidden;
+    width:100vw;
+    height: 48px;
+    background-color: #ffffff;
+    box-shadow: 0 0 6px #000000;
+}
+.header-button{
+    padding-left:16px;
+    padding-right: 24px;
+    text-decoration: none;
+    display: flex;
+    overflow: hidden;
+    height:100%;
+    align-self: center;
+    white-space: nowrap;
+    align-items: center;
+    color: #000000;
+    user-select: none;
+}
+.header-button:hover,
+.header-button:focus{
+    animation: ease-in-out  .5s ibtnfcd forwards;
+    -webkit-animation:ease-in-out  .5s ibtnfcd forwards;
+}
+.header-text{
+    align-self: center;
+    margin: 0 auto;
+    margin-right: 48px;
+    position: relative;
+}
+table{
+    margin-top: 64px;
+    margin-left: 16px;
+    margin-right: 16px;
+    display: flex;
+    flex-direction: column;
+}
+.header-table{
+    display: grid;
+    grid-template-columns: 4fr 2fr 2fr;
+    border-bottom: #555700 3px solid;
+    padding-bottom: 4px;
+}
+.header-table th{
+    height:26px;
+    outline: none;
+    border: 2px solid #ffffff;
+    border-right: 2px solid #888888;
+    user-select: none;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.header-table th:last-child{
+    border-right: 0;
+}
+.header-table th:hover,
+.header-table th:focus{
+    cursor: pointer;
+    animation: ease-in-out  .5s tbtnfcd forwards;
+    -webkit-animation:ease-in-out  .5s tbtnfcd forwards;
+}
+#tbody{
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#tbody tr{
+    padding-top: 4px;
+    padding-bottom: 4px;
+    display: grid;
+    grid-template-columns: 4fr 2fr 2fr;
+    grid-template-rows: 32px;
+    border-bottom: #aaaaaa85 2px solid;
+    outline: none;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#tbody tr:last-child{
+    border-bottom: 0;
+}
+#tbody tr:hover,
+#tbody tr:focus{
+    animation: ease-in-out  .5s ibtnfcd forwards;
+    -webkit-animation:ease-in-out  .5s ibtnfcd forwards;
+}
+@keyframes tbtnfcd{
+    from{
+        border-bottom:rgb(255,255,255) 2px solid;
+    }
+    to{
+        border-bottom:rgb(0,0,0) 2px solid;
+    }
+}
+@-webkit-keyframes tbtnfcd{
+    from{
+        border-bottom:rgb(255,255,255) 2px solid;
+    }
+    to{
+        border-bottom:rgb(0,0,0) 2px solid;
+    }
+}
+@keyframes ibtnfcd{
+    from{
+        background-color: #ffffff;
+    }
+    to{
+        background-color: #c4c4c4;
+    }
+}
+@-webkit-keyframes ibtnfcd{
+    from{
+        background-color: #ffffff;
+    }
+    to{
+        background-color: #c4c4c4;
+    }
+}
+a.dirr{
+    text-decoration: none;
+    display: flex;
+    color: #000000;
+    white-space: nowrap;
+    align-items: center;
+}
+a.dirr img{
+    margin-right:6px;
+    align-items: flex-start;
+}
+@media(max-width:410px){
+    .header-button{
+        animation: ease-in-out  .5s ibtnsld forwards;
+    -webkit-animation:ease-in-out  .5s ibtnsld forwards;
+    }
+
+    @keyframes ibtnsld{
+        from{
+            width:auto;
+        }
+        to{
+            width:32px;
+        padding:0;
+        }
+    }
+    @-webkit-keyframes ibtnsld{
+        from{
+            width:auto;
+        }
+        to{
+            width:32px;
+        padding:0;
+        }
+    }
+}
+        </style>
+        <script>
+            function sortTable(column) {
+  var theader = document.getElementById("table");
+  var oldOrder = theader.cells[column].dataset.order || '1';
+  oldOrder = parseInt(oldOrder, 10)
+  var newOrder = 0 - oldOrder;
+  theader.cells[column].dataset.order = newOrder;
+
+  var tbody = document.getElementById("tbody");
+  var rows = tbody.rows;
+  var list = [], i;
+  for (i = 0; i < rows.length; i++) {
+    list.push(rows[i]);
+  }
+  list.sort(function(row1, row2) {
+    var a = row1.cells[column].dataset.value;
+    var b = row2.cells[column].dataset.value;
+    if (column) {
+      a = parseInt(a, 10);
+      b = parseInt(b, 10);
+      return a > b ? newOrder : a < b ? oldOrder : 0;
+    }
+    if (a > b)
+      return newOrder;
+    if (a < b)
+      return oldOrder;
+    return 0;
+  });
+  for (i = 0; i < list.length; i++) {
+    tbody.appendChild(list[i]);
+  }
+}
+function addHandlers(element, column) {
+  element.onclick = (e) => sortTable(column);
+  element.onkeydown = (e) => {
+    if (e.key == 'Enter' || e.key == ' ') {
+      sortTable(column);
+      e.preventDefault();
+    }
+  };
+}
+function onLoad() {
+  addHandlers(document.getElementById('nameC'), 0);
+  addHandlers(document.getElementById('typeC'), 1);
+  addHandlers(document.getElementById('dateC'), 2);
+}
+window.addEventListener('DOMContentLoaded', onLoad);
+        </script>
+    </head>
+    <body>
+        <div class="header-sec">
+            <a class="header-button" href="#rootpath#"><img src="home.png">回到主页</a>
+            <a class="header-button" href="../"><img src="parentdir.png">返回上一级</a>
+        </div>
+        <table>
+            <thead>
+              <tr class="header-table" id="table">
+                <th id="nameC" tabindex="0" role="button" data-order="1">名称</th>
+                <th id="typeC" class="details" tabindex="0" role="button" data-order="1">类型</th>
+                <th id="hotC" class="details" tabindex="0" role="button" data-order="1">热度</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+              
+            </tbody>
+              </table>
+    </body>
+    <hr>
+    <a align="center"> All rights reserved. &copy; 2021 SeTuinDex </a>
+</html>
