@@ -1,4 +1,4 @@
-# Lupnis的小垃圾桶<br>Lupnis’s cyclebin
+# Lupnis的小仓库<br>Lupnis’s cyclebin
 
 > 1.这是个啥？
 > **1.What the hell is it?**
