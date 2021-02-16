@@ -60,4 +60,4 @@
 
 This this just a very primitive project, I will never maintain it due to my losing motivation of this algorithm, that is all. Remember that one teenager lost his  chance to post a  paper which is creative because of his carelessness, and NEVER BE A SECOND ME.
 
-**此处包含的代码仅为最初对版本，由于对此算法失去了动力，我将不会再对其维护。请记得一个由于没有意识和懒惰而失去了提交有创造性意义论文机会的人，并且记住，<font color="red">莫失良机</font>**
+**此处包含的代码仅为最初对版本，由于对此算法失去了动力，我将不会再对其维护。请记得一个由于没有意识和懒惰而失去了提交有创造性意义论文机会的人，并且记住，<font color=red>莫失良机</font>**
