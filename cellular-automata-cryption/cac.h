@@ -3,8 +3,10 @@
 
 class CACEnc{
     public:
-        CACENC(int mapsize, map<int,bool> keypairs,int maxdepth){
-
+        CACENC(int mapsize, map<int,bool> ikeypairs,int maxdepth){
+            graph=new (**int)malloc(sizeof(int*mapsize));
+            keypairs=ikeypairs;
+            maxsteps=maxdepth;
         }
         ~CACEnc(){}
         void input(string stream);
