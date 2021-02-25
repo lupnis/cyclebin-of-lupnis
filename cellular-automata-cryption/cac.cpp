@@ -23,11 +23,12 @@ namespace CAC
     }
     string charToBitString(char c)
     {
+        int v=abs((int)c);
         string temp;
-        while (c > 0)
+        while (v > 0)
         {
-            temp += to_string(c % 2);
-            c /= 2;
+            temp += to_string(v % 2);
+            v /= 2;
         }
         return temp;
     }
@@ -42,6 +43,7 @@ namespace CAC
                 outputCode = iter->second;
             else
                 outputCode = charToBitString(i);
+            for(int i=outputCode.length();i<sideLength;++i)outputCode="0"+outputCode;
             for (int j = 0; j < sideLength; ++j)
                 CACEnc::statusGraph[mv % sideLength][j] = CACEnc::statusGraph[mv % sideLength][j] ^ (outputCode[j] - '0');
             mv++;
@@ -83,19 +85,19 @@ namespace CAC
                     int aliveCount = 0;
                     if (j != 0)
                         aliveCount += CACEnc::statusGraph[i][j - 1];
-                    if (j != 47)
+                    if (j != sideLength-1)
                         aliveCount += CACEnc::statusGraph[i][j + 1];
                     if (i != 0)
                         aliveCount += CACEnc::statusGraph[i - 1][j];
-                    if (i != 47)
+                    if (i != sideLength-1)
                         aliveCount += CACEnc::statusGraph[i + 1][j];
                     if (i != 0 && j != 0)
                         aliveCount += CACEnc::statusGraph[i - 1][j - 1];
-                    if (i != 47 && j != 47)
+                    if (i != sideLength-1 && j != sideLength-1)
                         aliveCount += CACEnc::statusGraph[i + 1][j + 1];
-                    if (i != 0 && j != 47)
+                    if (i != 0 && j != sideLength-1)
                         aliveCount += CACEnc::statusGraph[i - 1][j + 1];
-                    if (i != 47 && j != 0)
+                    if (i != sideLength-1 && j != 0)
                         aliveCount += CACEnc::statusGraph[i + 1][j - 1];
                     temp[i][j] = (keyMap.find(aliveCount)->second == KeyMapStatus::KEEP ? CACEnc::statusGraph[i][j] : keyMap.find(aliveCount)->second);
                 }
